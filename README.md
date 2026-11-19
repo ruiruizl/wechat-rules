@@ -65,3 +65,58 @@ rules:
 - 想「微信不走代理、延迟最低」→ 指到 `DIRECT` / `直连`
 - 想「微信走家宽/回国」→ 指到 ping 最低的国内节点组
 - 规则顺序务必放在「国内IP/GEOSITE-CN/兜底代理」之前
+
+---
+
+# Stripchat 分流规则
+
+> 生成于 2026-11-20。共 7 条 DOMAIN-SUFFIX，已去重、修正 `DOMAIN SUFFIX` 缺连字符与 `DOMAIN-` 跨行断裂问题。
+
+| 文件 | 说明 | 直链 |
+|---|---|---|
+| `Stripchat-surge.list` | Surge 版 | https://raw.githubusercontent.com/ruiruizl/wechat-rules/main/Stripchat-surge.list |
+| `Stripchat-loon.list` | Loon 版 | https://raw.githubusercontent.com/ruiruizl/wechat-rules/main/Stripchat-loon.list |
+| `Stripchat-clash.yaml` | Clash payload | https://raw.githubusercontent.com/ruiruizl/wechat-rules/main/Stripchat-clash.yaml |
+| `Stripchat-acl4ssr-clash.list` | 极简 list | https://raw.githubusercontent.com/ruiruizl/wechat-rules/main/Stripchat-acl4ssr-clash.list |
+
+## 域名清单
+
+| 组 | 域名 | 作用 |
+|---|---|---|
+| 主站 | stripchat.com | 站点主域名 |
+| 主站 | stripchat.global | 国际化入口 |
+| 主站 | mavrtracktor.com | 统计/追踪 |
+| 边缘 | sacfedge.com | 边缘节点 |
+| 边缘 | growcdnssedge.com | 边缘节点 |
+| CDN | doppiocdn.com | 静态资源 |
+| CDN | doppiocdn.org | 静态资源 |
+
+## 用法
+
+### Surge
+```
+RULE-SET,https://raw.githubusercontent.com/ruiruizl/wechat-rules/main/Stripchat-surge.list,PROXY
+```
+
+### Loon
+```
+[Remote Rule]
+https://raw.githubusercontent.com/ruiruizl/wechat-rules/main/Stripchat-loon.list, policy=PROXY, tag=Stripchat, enabled=true
+```
+
+### Clash
+```yaml
+rule-providers:
+  stripchat:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/ruiruizl/wechat-rules/main/Stripchat-clash.yaml"
+    path: ./ruleset/stripchat.yaml
+    interval: 86400
+rules:
+  - RULE-SET,stripchat,PROXY
+```
+
+## 备注
+- 原稿里的 `V0000` 是客户端残留分组标记，不是规则，已丢弃。
+- 全部为 `DOMAIN-SUFFIX`，会连带匹配子域（如 `*.stripchat.com`）。

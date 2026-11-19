@@ -1,0 +1,14 @@
+# NAME: Stripchat
+# AUTHOR: ruiruizl
+# REPO: https://github.com/ruiruizl/wechat-rules
+# UPDATED: 2026-11-20 00:56:00
+# DOMAIN-SUFFIX: 7
+# TOTAL: 7
+payload:
+  - DOMAIN-SUFFIX,stripchat.com
+  - DOMAIN-SUFFIX,stripchat.global
+  - DOMAIN-SUFFIX,mavrtracktor.com
+  - DOMAIN-SUFFIX,sacfedge.com
+  - DOMAIN-SUFFIX,doppiocdn.com
+  - DOMAIN-SUFFIX,doppiocdn.org
+  - DOMAIN-SUFFIX,growcdnssedge.com
